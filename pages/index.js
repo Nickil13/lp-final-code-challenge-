@@ -1,7 +1,53 @@
+import React, { useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { useRouter } from "next/router";
 
-export default function Home() {
+export async function getStaticProps() {
+    let postData = [];
+    try {
+        const res = await fetch(
+            "https://jsonplaceholder.typicode.com/posts?_start=0&_limit=20"
+        );
+        postData = await res.json();
+    } catch (error) {
+        console.error(error);
+    }
+    return {
+        props: {
+            postData,
+        },
+    };
+}
+
+export default function Home({ postData }) {
+    const [posts, setPosts] = useState([]);
+    const router = useRouter();
+
+    React.useEffect(() => {
+        setPosts(postData);
+    }, []);
+
+    const handleCreatePost = async (title, body, userId) => {
+        const data = { title, body, userId };
+        try {
+            const res = await fetch(
+                "https://jsonplaceholder.typicode.com/posts",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                }
+            );
+            postData = await res.json();
+            if (postData) {
+                setPosts([postData, ...posts]);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className={styles.container}>
             <Head>
@@ -15,7 +61,35 @@ export default function Home() {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>Posts</h1>
-                <div>This is where the posts go</div>
+                <button
+                    className={styles.addBtn}
+                    onClick={() =>
+                        handleCreatePost("My first post", "Lalala", 2)
+                    }
+                >
+                    Create New Post
+                </button>
+                {/* Search bar to search by ID */}
+                <div></div>
+                <div>
+                    {posts.length > 0 &&
+                        posts.map((post, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    onClick={() =>
+                                        router.push(`posts/${post.id}`)
+                                    }
+                                >
+                                    <h2>
+                                        {`${post.id}. 
+                                        ${post.title}`}
+                                    </h2>
+                                    <p>{post.body}</p>
+                                </div>
+                            );
+                        })}
+                </div>
             </main>
         </div>
     );
