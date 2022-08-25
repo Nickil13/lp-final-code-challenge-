@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -15,12 +14,9 @@ export default function Home() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className={styles.title}>
-                    LaunchPad Final Coding Challenge
-                </h1>
+                <h1 className={styles.title}>Posts</h1>
+                <div>This is where the posts go</div>
             </main>
-
-            <footer className={styles.footer}></footer>
         </div>
     );
 }
