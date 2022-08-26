@@ -5,7 +5,7 @@ export default function Post({ id, title, body }) {
     return (
         <div>
             <h2>
-                <Link href={`posts/${id}`}>{`${id}. 
+                <Link href={`/posts/${id}`}>{`${id}. 
         ${title}`}</Link>
             </h2>
             <p>{body}</p>
