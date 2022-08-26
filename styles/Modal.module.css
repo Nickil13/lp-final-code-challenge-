@@ -1,0 +1,54 @@
+@values colors "./colors.css";
+@value textBlack, random from colors;
+
+.modalContainer {
+    position: fixed;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.13);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    position: relative;
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: white;
+    width: 80%;
+    max-width: 450px;
+}
+.inputControl {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+.inputControl > input,
+.inputControl > textarea {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.301);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: textBlack;
+}
+
+.submitBtn {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background: linear-gradient(120deg, rgb(240, 154, 201), rgb(52, 202, 202));
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.212);
+    color: white;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+.closeBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+    background-color: none;
+}
