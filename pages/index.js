@@ -55,7 +55,7 @@ export default function Home({ postData }) {
             );
             postData = await res.json();
             if (postData) {
-                setPosts([postData, ...posts]);
+                setPosts([...posts, postData]);
             }
         } catch (error) {
             console.error(error);
@@ -64,7 +64,7 @@ export default function Home({ postData }) {
     };
 
     return (
-        <div className={styles.container}>
+        <div className="container">
             <Head>
                 <title>Posts</title>
                 <meta

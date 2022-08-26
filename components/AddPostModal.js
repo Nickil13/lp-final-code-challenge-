@@ -5,17 +5,23 @@ export default function AddPostModal({ handleCreatePost, closeModal }) {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [userId, setUserId] = useState("");
+    const [error, setError] = useState("");
 
+    const onSubmitPost = (e) => {
+        e.preventDefault();
+        console.log("submitting");
+        if (!title || !body || !userId) {
+            setError("Please fill in all fields.");
+        } else {
+            error && setError("");
+            handleCreatePost(title, body, userId);
+        }
+    };
     return (
         <div className={styles.modalContainer}>
             <div className={styles.modal}>
                 <h2>Create New Post</h2>
-                <form
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleCreatePost(title, body, userId);
-                    }}
-                >
+                <form onSubmit={onSubmitPost}>
                     <div className={styles.inputControl}>
                         <label htmlFor="">Title: </label>
                         <input
@@ -46,14 +52,12 @@ export default function AddPostModal({ handleCreatePost, closeModal }) {
                             onChange={(e) => setUserId(e.target.value)}
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className={styles.submitBtn}
-                        disabled={!title || !body || !userId}
-                    >
+                    <button type="submit" className={styles.submitBtn}>
                         Submit
                     </button>
+                    {error && <p>{error}</p>}
                 </form>
+
                 <button
                     type="button"
                     className={styles.closeBtn}
