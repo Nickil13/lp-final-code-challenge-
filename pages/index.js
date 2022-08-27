@@ -23,7 +23,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ postData }) {
-    const { posts, setPosts } = useAppContext();
+    const { posts, setPosts, createPost, error, success } = useAppContext();
     const [modalShowing, setModalShowing] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const filteredPosts = searchValue
@@ -44,25 +44,11 @@ export default function Home({ postData }) {
         }
     }, [modalShowing]);
 
-    const handleCreatePost = async (title, body, userId) => {
+    const handleCreatePost = (title, body, userId) => {
         const data = { title, body, userId };
-        try {
-            const res = await fetch(
-                "https://jsonplaceholder.typicode.com/posts",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data),
-                }
-            );
-            postData = await res.json();
-            if (postData) {
-                setPosts([postData, ...posts]);
-            }
-        } catch (error) {
-            console.error(error);
-        }
+        createPost(data);
         setModalShowing(false);
+        setSearchValue("");
     };
 
     return (
@@ -84,7 +70,7 @@ export default function Home({ postData }) {
                 >
                     <span>+</span> New Post
                 </button>
-                {/* Search bar to search by ID */}
+
                 <div className={styles.searchBar}>
                     <label htmlFor="search">Search by Id: </label>
                     <input
@@ -95,6 +81,18 @@ export default function Home({ postData }) {
                         onChange={(e) => setSearchValue(e.target.value)}
                     />
                 </div>
+                {error ? (
+                    <p className={styles.errorMessage}>
+                        <span>X</span> {error}
+                    </p>
+                ) : (
+                    success && (
+                        <p className={styles.successMessage}>
+                            <span>&#10003;</span>
+                            {success}
+                        </p>
+                    )
+                )}
                 <div className={styles.posts}>
                     {filteredPosts.length > 0 &&
                         filteredPosts.map((post, index) => {

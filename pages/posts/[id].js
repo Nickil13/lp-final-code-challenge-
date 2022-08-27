@@ -45,7 +45,7 @@ export const getStaticProps = async (context) => {
 };
 
 export default function Post({ postData }) {
-    const { posts, setPosts } = useAppContext();
+    const { posts, editPost, deletePost } = useAppContext();
     const [post, setPost] = useState(postData);
     const currentPost = posts.find((post) => post.id === postData.id);
     const [modalShowing, setModalShowing] = useState(false);
@@ -63,60 +63,17 @@ export default function Post({ postData }) {
 
     const handleEditPost = (id, title, body, userId) => {
         const newPost = { id, title, body, userId };
-        editPost(newPost).then((res) => {
-            if (res) {
-                const newPosts = posts.map((post) => {
-                    if (post.id === id) {
-                        return newPost;
-                    }
-                    return post;
-                });
-                setPosts(newPosts);
-                setModalShowing(false);
-                router.push("/");
-            }
-        });
-    };
-    const editPost = async (newPost) => {
-        try {
-            const res = await fetch(
-                `https://jsonplaceholder.typicode.com/posts/${newPost.id}`,
-                {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(newPost),
-                }
-            );
-            const data = await res.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-        }
+        editPost(newPost);
+        setModalShowing(false);
+        router.push("/");
     };
 
     const handleDeletePost = (id) => {
-        deletePost(id).then(() => {
-            const newPosts = posts.filter((post) => post.id !== id);
-            setPosts([...newPosts]);
-            setIsDeleting(false);
-            router.push("/");
-        });
+        deletePost(id);
+        setIsDeleting(false);
+        router.push("/");
     };
 
-    const deletePost = async (id) => {
-        try {
-            const res = await fetch(
-                `https://jsonplaceholder.typicode.com/posts/${id}`,
-                {
-                    method: "DELETE",
-                }
-            );
-            const data = await res.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-        }
-    };
     return (
         <div className="container">
             <main>

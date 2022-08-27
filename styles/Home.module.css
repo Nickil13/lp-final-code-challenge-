@@ -26,6 +26,18 @@
     margin-right: 10px;
 }
 
+.errorMessage > span {
+    color: red;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.successMessage > span {
+    color: rgb(57, 192, 57);
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
 @media screen and (min-width: 500px) {
     .searchBar {
         flex-direction: row;
