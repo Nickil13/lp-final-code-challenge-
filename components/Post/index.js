@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import styles from "../styles/Post.module.css";
+import styles from "./Post.module.css";
 
 export default function Post({ id, title, body }) {
     return (

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import EditPostModal from "../../components/EditPostModal";
+import { EditPostModal, ConfirmDelete } from "../../components/Modals";
 import { useAppContext } from "../../context/context";
-import styles from "../../styles/PostPage.module.css";
+import styles from "../../styles/SinglePostPage.module.css";
 import Link from "next/link";
-import ConfirmDelete from "../../components/ConfirmDelete";
 import { useRouter } from "next/router";
 
 export const getStaticPaths = async () => {

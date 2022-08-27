@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import styles from "../styles/Modal.module.css";
+import styles from "./Modal.module.css";
 
-export default function AddPostModal({ handleCreatePost, closeModal }) {
-    const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
-    const [userId, setUserId] = useState("");
+export default function EditPostModal({ post, handleEditPost, closeModal }) {
+    const [title, setTitle] = useState(post?.title || "");
+    const [body, setBody] = useState(post?.body || "");
+    const [userId, setUserId] = useState(post?.userId || "");
     const [error, setError] = useState("");
 
     const onSubmitPost = (e) => {
@@ -13,13 +13,13 @@ export default function AddPostModal({ handleCreatePost, closeModal }) {
             setError("Please fill in all fields.");
         } else {
             error && setError("");
-            handleCreatePost(title, body, userId);
+            handleEditPost(post.id, title, body, Number(userId));
         }
     };
     return (
         <div className={styles.modalContainer}>
             <div className={styles.modal}>
-                <h2>Create New Post</h2>
+                <h2>Edit Post</h2>
                 <form onSubmit={onSubmitPost}>
                     <div className={styles.inputControl}>
                         <label htmlFor="">Title: </label>

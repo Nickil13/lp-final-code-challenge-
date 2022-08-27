@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Post from "../components/Post";
-import AddPostModal from "../components/AddPostModal";
+import { AddPostModal } from "../components/Modals";
 import { useAppContext } from "../context/context";
 
 export async function getStaticProps() {
@@ -57,7 +57,7 @@ export default function Home({ postData }) {
             );
             postData = await res.json();
             if (postData) {
-                setPosts([...posts, postData]);
+                setPosts([postData, ...posts]);
             }
         } catch (error) {
             console.error(error);
@@ -95,7 +95,7 @@ export default function Home({ postData }) {
                         onChange={(e) => setSearchValue(e.target.value)}
                     />
                 </div>
-                <div>
+                <div className={styles.posts}>
                     {filteredPosts.length > 0 &&
                         filteredPosts.map((post, index) => {
                             return <Post {...post} key={index} />;

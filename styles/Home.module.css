@@ -4,6 +4,17 @@
     font-size: 4rem;
 }
 
+.posts {
+    width: 100%;
+}
+
+.searchBar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+}
+
 .addBtn {
     display: flex;
     align-items: center;
@@ -13,13 +24,6 @@
 .addBtn span {
     font-size: 1.5rem;
     margin-right: 10px;
-}
-
-.searchBar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem 0;
 }
 
 @media screen and (min-width: 500px) {
