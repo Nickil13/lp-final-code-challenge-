@@ -72,9 +72,9 @@ export default function Post({ postData }) {
                     }
                     return post;
                 });
-                setPost(res);
                 setPosts(newPosts);
                 setModalShowing(false);
+                router.push("/");
             }
         });
     };
@@ -96,10 +96,8 @@ export default function Post({ postData }) {
     };
 
     const handleDeletePost = (id) => {
-        console.log("deleting");
         deletePost(id).then(() => {
             const newPosts = posts.filter((post) => post.id !== id);
-            console.log(newPosts);
             setPosts([...newPosts]);
             setIsDeleting(false);
             router.push("/");
@@ -122,9 +120,9 @@ export default function Post({ postData }) {
     };
     return (
         <div className="container">
-            <main className={styles.main}>
-                <Link href="/">Go back</Link>
-                <div>
+            <main>
+                <Link href="/">{`< Go Back`}</Link>
+                <div className={styles.post}>
                     <h1 className={styles.title}>{post?.title}</h1>
                     <div className={styles.postBtns}>
                         <button

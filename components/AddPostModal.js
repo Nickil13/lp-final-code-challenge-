@@ -9,7 +9,6 @@ export default function AddPostModal({ handleCreatePost, closeModal }) {
 
     const onSubmitPost = (e) => {
         e.preventDefault();
-        console.log("submitting");
         if (!title || !body || !userId) {
             setError("Please fill in all fields.");
         } else {

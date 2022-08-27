@@ -1,3 +1,6 @@
+.post {
+    margin: auto;
+}
 .postBtns > button:first-child {
     margin-right: 1rem;
 }

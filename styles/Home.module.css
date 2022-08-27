@@ -1,22 +1,7 @@
-.title a {
-    color: #0070f3;
-    text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-    text-decoration: underline;
-}
-
 .title {
     margin: 1rem;
     line-height: 1.15;
     font-size: 4rem;
-}
-
-.title {
-    text-align: center;
 }
 
 .addBtn {
@@ -33,12 +18,14 @@
 .searchBar {
     display: flex;
     flex-direction: column;
-    margin: 2rem auto 1rem 0;
+    align-items: center;
+    margin: 2rem 0;
 }
 
 @media screen and (min-width: 500px) {
     .searchBar {
         flex-direction: row;
+        margin: 2rem auto 2rem 0;
     }
     .searchBar > label {
         margin-right: 1rem;

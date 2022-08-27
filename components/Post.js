@@ -4,10 +4,9 @@ import styles from "../styles/Post.module.css";
 
 export default function Post({ id, title, body }) {
     return (
-        <div>
+        <div className={styles.post}>
             <h2 className={styles.title}>
-                <Link href={`/posts/${id}`}>{`${id}. 
-        ${title}`}</Link>
+                <Link href={`/posts/${id}`}>{`${id}. ${title}`}</Link>
             </h2>
             <p>{body}</p>
         </div>

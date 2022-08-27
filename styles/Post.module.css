@@ -1,13 +1,15 @@
+.post {
+    width: 100%;
+    background: linear-gradient(
+        120deg,
+        rgba(240, 154, 201, 0.555),
+        rgb(52, 202, 202, 0.555)
+    );
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
 .title {
     position: relative;
-}
-.title:hover:after {
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    content: "";
-    width: 50%;
-    height: 3px;
-    border-radius: 10px;
-    background: rgb(240, 154, 201);
 }

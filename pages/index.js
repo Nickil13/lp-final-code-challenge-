@@ -26,16 +26,15 @@ export default function Home({ postData }) {
     const { posts, setPosts } = useAppContext();
     const [modalShowing, setModalShowing] = useState(false);
     const [searchValue, setSearchValue] = useState("");
+    const filteredPosts = searchValue
+        ? posts.filter((post) => post.id == searchValue)
+        : [...posts];
 
     useEffect(() => {
         if (posts.length === 0) {
             setPosts(postData);
         }
     }, []);
-
-    useEffect(() => {
-        console.log("searchValue: ", searchValue);
-    }, [searchValue]);
 
     useEffect(() => {
         if (modalShowing) {
@@ -97,8 +96,8 @@ export default function Home({ postData }) {
                     />
                 </div>
                 <div>
-                    {posts.length > 0 &&
-                        posts.map((post, index) => {
+                    {filteredPosts.length > 0 &&
+                        filteredPosts.map((post, index) => {
                             return <Post {...post} key={index} />;
                         })}
                 </div>

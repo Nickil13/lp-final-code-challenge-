@@ -4,11 +4,9 @@ const AppContext = createContext();
 
 export function AppProvider({ children }) {
     const [posts, setPosts] = useState([]);
-    const [currentPost, setCurrentPost] = useState(null);
+
     return (
-        <AppContext.Provider
-            value={{ posts, setPosts, currentPost, setCurrentPost }}
-        >
+        <AppContext.Provider value={{ posts, setPosts }}>
             {children}
         </AppContext.Provider>
     );
