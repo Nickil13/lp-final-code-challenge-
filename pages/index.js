@@ -28,7 +28,9 @@ export default function Home({ postData }) {
     const [searchValue, setSearchValue] = useState("");
 
     useEffect(() => {
-        setPosts(postData);
+        if (posts.length === 0) {
+            setPosts(postData);
+        }
     }, []);
 
     useEffect(() => {

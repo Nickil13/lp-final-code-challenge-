@@ -55,3 +55,12 @@
 .closeBtn:hover {
     transform: none;
 }
+
+.modalAlert {
+    display: flex;
+    flex-direction: column;
+}
+.modalAlert > span {
+    margin-left: 10px;
+    font-style: italic;
+}

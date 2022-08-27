@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import EditPostModal from "../../components/EditPostModal";
 import { useAppContext } from "../../context/context";
 import styles from "../../styles/PostPage.module.css";
+import Link from "next/link";
+import ConfirmDelete from "../../components/ConfirmDelete";
+import { useRouter } from "next/router";
 
 export const getStaticPaths = async () => {
     const res = await fetch(
@@ -42,9 +46,12 @@ export const getStaticProps = async (context) => {
 };
 
 export default function Post({ postData }) {
-    const { posts } = useAppContext();
+    const { posts, setPosts } = useAppContext();
     const [post, setPost] = useState(postData);
     const currentPost = posts.find((post) => post.id === postData.id);
+    const [modalShowing, setModalShowing] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const router = useRouter();
 
     React.useEffect(() => {
         if (
@@ -54,25 +61,105 @@ export default function Post({ postData }) {
             setPost(currentPost);
         }
     }, []);
+
+    const handleEditPost = (id, title, body, userId) => {
+        const newPost = { id, title, body, userId };
+        editPost(newPost).then((res) => {
+            if (res) {
+                const newPosts = posts.map((post) => {
+                    if (post.id === id) {
+                        return newPost;
+                    }
+                    return post;
+                });
+                setPost(res);
+                setPosts(newPosts);
+                setModalShowing(false);
+            }
+        });
+    };
+    const editPost = async (newPost) => {
+        try {
+            const res = await fetch(
+                `https://jsonplaceholder.typicode.com/posts/${newPost.id}`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(newPost),
+                }
+            );
+            const data = await res.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleDeletePost = (id) => {
+        console.log("deleting");
+        deletePost(id).then(() => {
+            const newPosts = posts.filter((post) => post.id !== id);
+            console.log(newPosts);
+            setPosts([...newPosts]);
+            setIsDeleting(false);
+            router.push("/");
+        });
+    };
+
+    const deletePost = async (id) => {
+        try {
+            const res = await fetch(
+                `https://jsonplaceholder.typicode.com/posts/${id}`,
+                {
+                    method: "DELETE",
+                }
+            );
+            const data = await res.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <div className="container">
             <main className={styles.main}>
+                <Link href="/">Go back</Link>
                 <div>
                     <h1 className={styles.title}>{post?.title}</h1>
                     <div className={styles.postBtns}>
-                        <button className="btn-primary">Edit Post</button>
-                        <button className="btn-secondary">Delete Post</button>
+                        <button
+                            className="btn-primary"
+                            onClick={() => setModalShowing(true)}
+                        >
+                            Edit Post
+                        </button>
+                        <button
+                            className="btn-secondary"
+                            onClick={() => {
+                                setIsDeleting(true);
+                            }}
+                        >
+                            Delete Post
+                        </button>
                     </div>
                     <p>{post?.body}</p>
                 </div>
             </main>
-            {/* Add Post Modal */}
-            {/* {modalShowing && (
-                <AddPostModal
-                    handleCreatePost={handleCreatePost}
+            {/* Edit Post Modal */}
+            {modalShowing && (
+                <EditPostModal
+                    post={post}
+                    handleEditPost={handleEditPost}
                     closeModal={() => setModalShowing(false)}
                 />
-            )} */}
+            )}
+            {isDeleting && (
+                <ConfirmDelete
+                    postTitle={post.title}
+                    handleDeletePost={() => handleDeletePost(post.id)}
+                    closeAlert={() => setIsDeleting(false)}
+                />
+            )}
         </div>
     );
 }
