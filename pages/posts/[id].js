@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAppContext } from "../../context/context";
 import styles from "../../styles/PostPage.module.css";
 
 export const getStaticPaths = async () => {
@@ -41,16 +42,28 @@ export const getStaticProps = async (context) => {
 };
 
 export default function Post({ postData }) {
+    const { posts } = useAppContext();
+    const [post, setPost] = useState(postData);
+    const currentPost = posts.find((post) => post.id === postData.id);
+
+    React.useEffect(() => {
+        if (
+            currentPost &&
+            JSON.stringify(currentPost) != JSON.stringify(postData)
+        ) {
+            setPost(currentPost);
+        }
+    }, []);
     return (
         <div className="container">
             <main className={styles.main}>
                 <div>
-                    <h1 className={styles.title}>{postData.title}</h1>
+                    <h1 className={styles.title}>{post?.title}</h1>
                     <div className={styles.postBtns}>
                         <button className="btn-primary">Edit Post</button>
                         <button className="btn-secondary">Delete Post</button>
                     </div>
-                    <p>{postData.body}</p>
+                    <p>{post?.body}</p>
                 </div>
             </main>
             {/* Add Post Modal */}

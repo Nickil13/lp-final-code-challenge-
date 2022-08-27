@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Post from "../components/Post";
 import AddPostModal from "../components/AddPostModal";
+import { useAppContext } from "../context/context";
 
 export async function getStaticProps() {
     let postData = [];
@@ -22,7 +23,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ postData }) {
-    const [posts, setPosts] = useState([]);
+    const { posts, setPosts } = useAppContext();
     const [modalShowing, setModalShowing] = useState(false);
     const [searchValue, setSearchValue] = useState("");
 
